@@ -4,34 +4,19 @@ import Link from "next/link";
 import jwt_decode from "jwt-decode";
 // components
 import RoleSelection from "@/components/job/role-selection";
-// import { ScrollMotionContainer, ScrollMotionItem, } from "@/components/ScrollMotion";
-// 用 {} 導入的內容是命名導出的，而不加{}導入的內容是默認導出的。
-// import LatestMission, {
-//   MobileLatestMission,
-// } from "@/components/job/latest-mission";
-// import Search from "@/components/job/search";
-// import Filter from '@/components/job/filter'
-// import MissionCard from '@/components/job/mission-card'
 import Pagination from "@/components/pagination";
 // react-icons
 import { FaCaretUp, FaCaretDown, FaRegHeart, FaHeart } from "react-icons/fa";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { BiSearchAlt } from "react-icons/bi";
-import { CiLocationOn } from "react-icons/ci";
 import { FaLocationDot, FaRegCalendarCheck } from "react-icons/fa6";
-import { MdDateRange } from "react-icons/md";
-import { BsFillCalendar2DateFill } from "react-icons/bs";
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-// Filter
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 // 地區篩選
-// import { Cascader } from '@douyinfe/semi-ui';
-import { Cascader } from "antd";
 import cityData from "@/data/CityCountyData.json";
+// 動畫
 import {
   motion,
   useAnimationControls,
@@ -69,8 +54,8 @@ const Search = ({ placeholder, color, onClick, search, setSearch, inputValue, se
     setSearch(inputValue);
     // 清空輸入框的值
     setInputValue("");
-    console.log("按了搜尋按鈕的inputValue是" + inputValue)
-    console.log("按了搜尋按鈕的search是" + search)
+    // console.log("按了搜尋按鈕的inputValue是" + inputValue)
+    // console.log("按了搜尋按鈕的search是" + search)
     setActivePage(1);
   };
 
@@ -83,10 +68,10 @@ const Search = ({ placeholder, color, onClick, search, setSearch, inputValue, se
         ref={inputRef}
         value={inputValue}
         onChange={(e) => {
-          console.log(e.target.value);
+          // console.log(e.target.value);
           // 不在這裡觸發搜尋，而是更新 inputValue 狀態
           setInputValue(e.target.value);
-          console.log("輸入時的inputValue是" + inputValue)
+          // console.log("輸入時的inputValue是" + inputValue)
         }}
       />
       <button
@@ -113,31 +98,20 @@ const MyFilter = ({ missionType, setMissionType, missionCity, setMissionCity, mi
     setSelectedCity(city);
     setSelectedArea(null);
     // console.log(`選中的值是: ${selectedCity}`);
-    console.log(`選中的城市是: ${city.CityName}`);
+    // console.log(`選中的城市是: ${city.CityName}`);
     setMissionCity(city.CityName);
     setMissionArea(null); // 要重置area 第二次篩city才能正常
     // console.log(`選中的missionCity是: ${missionCity}`);
     setActivePage(1);
   };
 
-  // 立即更新missionCity的值 否則第一次點擊會是null(因為異步)
-  useEffect(() => {
-    console.log(`選中的missionCity是: ${missionCity}`);
-    console.log(`"現在是接"+http://localhost:3005/api/mission/all-missions?missionType=${missionType}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}`)
-  }, [missionCity]);
-
   // 三：處理任務area下拉選單項的點擊事件
   const handleAreaChange = (area) => {
     setSelectedArea(area);
-    console.log(`選中的地區是: ${area.AreaName}`);
+    // console.log(`選中的地區是: ${area.AreaName}`);
     setMissionArea(area.AreaName);
     setActivePage(1);
   };
-
-  useEffect(() => {
-    console.log(`選中的missionArea是: ${missionArea}`);
-    console.log(`"現在是接"++http://localhost:3005/api/mission/all-missions?missionType=${missionType}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}`)
-  }, [missionArea]);
 
   // 任務類型選項
   const options1 = [
@@ -162,7 +136,7 @@ const MyFilter = ({ missionType, setMissionType, missionCity, setMissionCity, mi
     // 更新按鈕文字
     setButtonText1(label);
     // 這裡可以使用selectedValue來執行其他操作
-    console.log(`選中的值是: ${selectedValue}`);
+    // console.log(`選中的值是: ${selectedValue}`);
 
     setMissionType(selectedValue);
     setActivePage(1);
@@ -172,7 +146,7 @@ const MyFilter = ({ missionType, setMissionType, missionCity, setMissionCity, mi
   const handleItemClick2 = (label) => {
     const selectedValue = options2.find(option => option.label === label)?.value;
     setButtonText2(label);
-    console.log(`選中的值是: ${selectedValue}`);
+    // console.log(`選中的值是: ${selectedValue}`);
 
     setUpdateDate(selectedValue);
     setActivePage(1);
@@ -188,7 +162,7 @@ const MyFilter = ({ missionType, setMissionType, missionCity, setMissionCity, mi
     setButtonText2('更新時間');
     setSelectedCity(null);
     setSelectedArea(null);
-    console.log("現在的missionType是" + missionType + "現在的updateDate是" + updateDate + "現在的missionCity是" + missionCity + "現在的missionArea是" + missionArea);
+    // console.log("現在的missionType是" + missionType + "現在的updateDate是" + updateDate + "現在的missionCity是" + missionCity + "現在的missionArea是" + missionArea);
   };
 
   // 點擊標題時 讓button為active（修改樣式用）
@@ -391,31 +365,21 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
     setSelectedCity(city);
     setSelectedArea(null);
     // console.log(`選中的值是: ${selectedCity}`);
-    console.log(`選中的城市是: ${city.CityName}`);
+    // console.log(`選中的城市是: ${city.CityName}`);
     setMissionCity(city.CityName);
     setMissionArea(null); // 要重置area 第二次篩city才能正常
     // console.log(`選中的missionCity是: ${missionCity}`);
     setActivePage(1);
   };
 
-  // 立即更新missionCity的值 否則第一次點擊會是null(因為異步)
-  useEffect(() => {
-    console.log(`選中的missionCity是: ${missionCity}`);
-    console.log(`"現在是接"+http://localhost:3005/api/mission/all-missions?missionType=${missionType}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}`)
-  }, [missionCity]);
-
   // 三：處理任務area下拉選單項的點擊事件
   const handleAreaChange = (area) => {
     setSelectedArea(area);
-    console.log(`選中的地區是: ${area.AreaName}`);
+    // console.log(`選中的地區是: ${area.AreaName}`);
     setMissionArea(area.AreaName);
     setActivePage(1);
   };
 
-  useEffect(() => {
-    console.log(`選中的missionArea是: ${missionArea}`);
-    console.log(`"現在是接"++http://localhost:3005/api/mission/all-missions?missionType=${missionType}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}`)
-  }, [missionArea]);
 
   // 任務類型選項
   const options1 = [
@@ -440,7 +404,7 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
     // 更新按鈕文字
     setButtonText1(label);
     // 這裡可以使用selectedValue來執行其他操作
-    console.log(`選中的值是: ${selectedValue}`);
+    // console.log(`選中的值是: ${selectedValue}`);
 
     setMissionType(selectedValue);
     setActivePage(1);
@@ -450,7 +414,7 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
   const handleItemClick2 = (label) => {
     const selectedValue = options2.find(option => option.label === label)?.value;
     setButtonText2(label);
-    console.log(`選中的值是: ${selectedValue}`);
+    // console.log(`選中的值是: ${selectedValue}`);
 
     setUpdateDate(selectedValue);
     setActivePage(1);
@@ -466,7 +430,7 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
     setButtonText2('更新時間');
     setSelectedCity(null);
     setSelectedArea(null);
-    console.log("現在的missionType是" + missionType + "現在的updateDate是" + updateDate + "現在的missionCity是" + missionCity + "現在的missionArea是" + missionArea);
+    // console.log("現在的missionType是" + missionType + "現在的updateDate是" + updateDate + "現在的missionCity是" + missionCity + "現在的missionArea是" + missionArea);
   };
 
   return (
@@ -599,7 +563,7 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
 };
 
 // 排序
-const Sort = ({ missionType, setMissionType, missionCity, setMissionCity, missionArea, setMissionArea, updateDate, setUpdateDate, sortOrder, setSortOrder, sortBy, setSortBy, search }) => {
+const Sort = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
   const [activeButton, setActiveButton] = useState("post_date");
   const [iconDirection, setIconDirection] = useState({}); // 用於跟蹤圖標方向
 
@@ -616,10 +580,6 @@ const Sort = ({ missionType, setMissionType, missionCity, setMissionCity, missio
     setIconDirection(newIconDirection);
   };
 
-  useEffect(() => {
-    console.log("現在是" + sortOrder);
-    console.log(`排序現在是接+http://localhost:3005/api/mission/all-missions?missionType=${missionType}&updateDate=${updateDate}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}&missionSearch=${search}`)
-  }, [sortOrder]);
 
   return (
     <>
@@ -657,7 +617,7 @@ const Sort = ({ missionType, setMissionType, missionCity, setMissionCity, missio
 
 
 // 最新任務（電腦版）
-const LatestMission = ({ userId }) => {
+const LatestMission = ({ formatDate, userId }) => {
 
   const [latestMissions, setLatestMissions] = useState([])
 
@@ -665,7 +625,7 @@ const LatestMission = ({ userId }) => {
     await axios.get("http://localhost:3005/api/mission/latest-missions")
       .then((response) => {
         const data = response.data.data;
-        console.log("data是" + data);
+        // console.log("data是" + data);
         setLatestMissions(data)
       })
       .catch((error) => {
@@ -675,15 +635,6 @@ const LatestMission = ({ userId }) => {
   useEffect(() => {
     getLatestMissions()
   }, [])
-
-  // 格式化日期
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
-  }
 
   // 收藏
   const [isFavorites, setIsFavorites] = useState([]);
@@ -850,7 +801,7 @@ const LatestMission = ({ userId }) => {
 }
 
 // 最新任務（手機版）
-const MobileLatestMission = ({ userId }) => {
+const MobileLatestMission = ({ formatDate, userId }) => {
   const [latestMissions, setLatestMissions] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   // 追蹤動畫狀態 防止多次快速點擊上一張或下一張按鈕 導致卡片重疊
@@ -871,14 +822,6 @@ const MobileLatestMission = ({ userId }) => {
     getLatestMissions();
   }, []);
 
-  // 格式化日期
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
-  }
 
   const nextSlide = () => {
     if (!isAnimating) {
@@ -1089,11 +1032,6 @@ function ImageWithEqualDimensions({ file_path }) {
     }
   };
 
-  // // 立即在組件加載時調整照片的高度
-  // useEffect(() => {
-  //   handleResize();
-  // }, []);
-
   useEffect(() => {
     // 立即在組件加載時調整照片的高度
     handleResize();
@@ -1112,16 +1050,7 @@ function ImageWithEqualDimensions({ file_path }) {
 }
 
 // 任務卡片（這邊的參數如果忘記設定會讓卡片出不來）
-const MissionCard = ({ missionType, missionCity, missionArea, setMissionType, updateDate, setUpdateDate, sortOrder, setSortOrder, sortBy, setSortBy, allMissions, currentData, userId, setUserId, missionActive, missionVariant }) => {
-
-  // 格式化日期
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}/${month}/${day}`;
-  }
+const MissionCard = ({ formatDate, currentData, userId, missionActive, missionVariant }) => {
 
   // 收藏
   const [collection, setCollection] = useState([]); //用來儲存收藏
@@ -1129,7 +1058,7 @@ const MissionCard = ({ missionType, missionCity, missionArea, setMissionType, up
     axios.get(`http://localhost:3005/api/mission/collections/${userId}`)
       .then((response) => {
         setCollection(response.data.result);
-        console.log(response.data.result);
+        // console.log(response.data.result);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -1144,7 +1073,7 @@ const MissionCard = ({ missionType, missionCity, missionArea, setMissionType, up
   const addCollection = async (mission_id) => {
     // 檢查收藏中是否已經存在具有相同 id 的任務
     const have = collection.find((v) => v.mission_id === mission_id);
-    console.log(have);
+    // console.log(have);
     // 如果收藏中沒有相同的任務
     if (have === undefined) {
       try {
@@ -1163,7 +1092,7 @@ const MissionCard = ({ missionType, missionCity, missionArea, setMissionType, up
   const deleteCollection = async (mission_id) => {
     // 檢查收藏中是否已經存在具有相同 id 的商品
     const have = collection.find((v) => v.mission_id === mission_id);
-    console.log(have);
+    // console.log(have);
     // 如果收藏中有相同的任務
     if (have) {
       try {
@@ -1196,9 +1125,9 @@ const MissionCard = ({ missionType, missionCity, missionArea, setMissionType, up
   // 初始化每個按鈕的初始hover狀態（空心愛心hover時要替換成實心）
   // 設一個陣列，包含了與 currentData 中任務數量相同數量的布林值false，用來表示每個按鈕的初始 hover 狀態。
   const initialHoverStates = Array(currentData.length).fill(false);
-  console.log("initialHoverStates是" + initialHoverStates);
+  // console.log("initialHoverStates是" + initialHoverStates);
   const [isHovered, setIsHovered] = useState(initialHoverStates);
-  console.log("isHovered是" + isHovered)
+  // console.log("isHovered是" + isHovered)
 
   // 設置 onMouseEnter 處理程序來處理hover狀態
   const handleMouseEnter = (index) => {
@@ -1358,7 +1287,7 @@ export default function MissionList() {
       }
       const response = await axios.get(apiUrl);
       const data = response.data.data;
-      console.log(data);
+      // console.log(data);
       setAllMissions(data);
     } catch (error) {
       console.error("Error:", error);
@@ -1427,10 +1356,6 @@ export default function MissionList() {
     })();
   }, [missionType, missionCity, missionArea, updateDate, search, sortOrder, sortBy]);
 
-  useEffect(() => {
-    // 在allMissions狀態更新後輸出內容
-    console.log("allMissions是", allMissions);
-  }, [allMissions]);
 
   // 利用token拿到當前登入的userID
   useEffect(() => {
@@ -1439,7 +1364,7 @@ export default function MissionList() {
       try {
         const decodedToken = jwt_decode(token);
         const currentUserID = decodedToken.id;
-        console.log("currentUserID", currentUserID);
+        // console.log("currentUserID", currentUserID);
         setUserId(currentUserID);
         // 在此處將令牌token添加到請求標頭
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -1455,9 +1380,6 @@ export default function MissionList() {
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = allMissions.slice(startIndex, endIndex);
-  useEffect(() => {
-    // console.log("currentData這頁的資料是", currentData);
-  }, [currentData]);
 
 
 
@@ -1471,9 +1393,6 @@ export default function MissionList() {
     setSortBy('post_date');
     setInputValue('');
     setSearch("");
-    // setSelectedCity(null); // 重置城市选择为 null 或默认值
-    // setSelectedArea(null); // 重置地区选择为 null 或默认值
-    console.log(`重載後是+http://localhost:3005/api/mission/all-missions?missionType=${missionType}&updateDate=${updateDate}&missionCity=${missionCity}&missionArea=${missionArea}&sortOrder=${sortOrder}&sortBy=${sortBy}&missionSearch=${search}`);
   }, []);
 
   // 點麵包屑重置所有設定
@@ -1492,7 +1411,7 @@ export default function MissionList() {
     setSearch("");
     setActivePage(1);
     getAllMissions()
-    console.log("狀態變數已重置為預設值");
+    // console.log("狀態變數已重置為預設值");
   };
   const handleClearSettings = () => {
     // 使用 setTimeout 延遲執行 clearSettings 本來沒有寫 但clearSettings要點2次才反應
@@ -1508,6 +1427,14 @@ export default function MissionList() {
     window.scrollTo(0, 0);
   }, [activePage]);
 
+  // 格式化日期
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
+  }
 
   return (
     <>
@@ -1573,13 +1500,13 @@ export default function MissionList() {
           {/* 最新任務桌機 */}
           <div className="latest-mission latest-mission-pc d-none d-lg-flex flex-column mb-3 position-relative">
             <h3 className="size-5  ">最新任務</h3>
-            <LatestMission userId={userId} />
+            <LatestMission formatDate={formatDate} userId={userId} />
             <img src='/job-icon/animation4.gif' className='position-absolute animation-paw' />
           </div>
           {/* 最新任務手機 */}
           <div className="latest-mission latest-mission-mobile d-lg-none mb-3 mt-1">
             <h3 className="size-5">最新任務</h3>
-            <MobileLatestMission userId={userId} />
+            <MobileLatestMission formatDate={formatDate} userId={userId} />
           </div>
           {/* 任務列表 */}
           <div className='mission-list d-lg-flex  justify-content-center align-items-start'>
@@ -1587,8 +1514,7 @@ export default function MissionList() {
             {currentData.length > 0 ? (
               <div className="row d-flex mb-3 g-3 g-md-4">
                 {/* 使用g-3 不用justify-content-between 預設是start 卡片就會照順序排列 */}
-                <MissionCard sortOrder={sortOrder} sortBy={sortBy} missionType={missionType} setMissionType={setMissionType} missionCity={missionCity} setMissionCity={setMissionCity} missionArea={missionArea} setMissionArea={setMissionArea}
-                  updateDate={updateDate} setUpdateDate={setUpdateDate} allMissions={allMissions} currentData={currentData} userId={userId} setUserId={setUserId} missionActive={missionActive} missionVariant={missionVariant} />
+                <MissionCard formatDate={formatDate}  currentData={currentData} userId={userId} missionActive={missionActive} missionVariant={missionVariant} />
               </div>
             ) : (
               <div className="d-flex justify-content-center align-items-center flex-column mt-5">
