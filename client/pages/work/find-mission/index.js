@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Link from "next/link";
 import jwt_decode from "jwt-decode";
+// import FormControl from '@material-ui/core/FormControl';
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
 // components
 import RoleSelection from "@/components/job/role-selection";
 import Pagination from "@/components/pagination";
@@ -562,7 +566,7 @@ const FilterMobile = ({ missionType, setMissionType, missionCity, setMissionCity
   );
 };
 
-// 排序
+// 排序：按鈕式
 const Sort = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
   const [activeButton, setActiveButton] = useState("post_date");
   const [iconDirection, setIconDirection] = useState({}); // 用於跟蹤圖標方向
@@ -615,6 +619,52 @@ const Sort = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
   );
 };
 
+// 排序：選單式
+const Sort2 = ({ sortOrder, setSortOrder, sortBy, setSortBy }) => {
+  const post_date_desc = () => {
+    setSortBy("post_date");
+    setSortOrder("desc");
+  }
+  const price_desc = () => {
+    setSortBy("price");
+    setSortOrder("desc");
+  }
+  const price_asc = () => {
+    setSortBy("price");
+    setSortOrder("asc");
+  }
+  return (
+    <>
+      <FormControl>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          排序方式
+        </InputLabel>
+        {/* NativeSelect不能用onClick事件 因為它是表單元素 不是互動式元素 */}
+        <NativeSelect
+          defaultValue={1}
+          inputProps={{
+            name: 'orderType',
+            id: 'uncontrolled-native',
+          }}
+          onChange={(e) => {
+            const selectedValue = e.target.value;
+            if (selectedValue === '1') {
+              post_date_desc();
+            } else if (selectedValue === '2') {
+              price_desc();
+            } else if (selectedValue === '3') {
+              price_asc();
+            }
+          }}
+        >
+          <option value={1}>刊登時間近到遠</option>
+          <option value={2}>薪資高到低</option>
+          <option value={3}>薪資低到高</option>
+        </NativeSelect>
+      </FormControl>
+    </>
+  );
+};
 
 // 最新任務（電腦版）
 const LatestMission = ({ formatDate, userId }) => {
@@ -1492,8 +1542,8 @@ export default function MissionList() {
         </div>
 
         <div className='d-flex my-lg-2'>
-          <Sort missionType={missionType} setMissionType={setMissionType} missionCity={missionCity} setMissionCity={setMissionCity} missionArea={missionArea} setMissionArea={setMissionArea}
-            updateDate={updateDate} setUpdateDate={setUpdateDate} sortOrder={sortOrder} setSortOrder={setSortOrder} sortBy={sortBy} setSortBy={setSortBy} />
+          <Sort sortOrder={sortOrder} setSortOrder={setSortOrder} sortBy={sortBy} setSortBy={setSortBy} />
+          {/* <Sort2 sortOrder={sortOrder} setSortOrder={setSortOrder} sortBy={sortBy} setSortBy={setSortBy} /> */}
         </div>
 
         <section className="d-flex all-mission flex-column flex-lg-row mt-2 mt-lg-3">
@@ -1514,7 +1564,7 @@ export default function MissionList() {
             {currentData.length > 0 ? (
               <div className="row d-flex mb-3 g-3 g-md-4">
                 {/* 使用g-3 不用justify-content-between 預設是start 卡片就會照順序排列 */}
-                <MissionCard formatDate={formatDate}  currentData={currentData} userId={userId} missionActive={missionActive} missionVariant={missionVariant} />
+                <MissionCard formatDate={formatDate} currentData={currentData} userId={userId} missionActive={missionActive} missionVariant={missionVariant} />
               </div>
             ) : (
               <div className="d-flex justify-content-center align-items-center flex-column mt-5">

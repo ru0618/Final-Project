@@ -105,6 +105,18 @@
         }
     }
 
+    // 下拉式選單的排序
+    .MuiInputLabel-formControl {
+        color: $text-mark;
+    }
+
+    .css-v4u5dn-MuiInputBase-root-MuiInput-root {
+        color: $text-main;
+
+        &:after {
+            border-bottom: 2px solid $hover;
+        }
+    }
 
     .all-mission {
         gap: 40px;
@@ -115,7 +127,7 @@
             display: inline-block;
             padding: 26px;
 
-            .animation-paw{
+            .animation-paw {
                 bottom: -65px;
                 right: 0;
             }
@@ -157,7 +169,8 @@
             .filter-button {
                 width: 8rem;
             }
-            .mobile-filter{
+
+            .mobile-filter {
                 margin: 0.8rem 0;
             }
         }
